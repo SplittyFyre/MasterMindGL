@@ -2,11 +2,11 @@ package mastermind.game;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import engine.objStuff.OBJParser;
 import engine.renderEngine.TRDisplayManager;
@@ -85,7 +85,8 @@ public class Layer {
 	public static Layer getRandom() {
 		Layer retval = new Layer();
 		
-		List<Colour> possibles = Arrays.asList(Colour.values());
+		List<Colour> possibles = new LinkedList<Colour>(Arrays.asList(Colour.values()));
+		possibles.remove(Colour.UNKNOWN);
 		Collections.shuffle(possibles);
 				
 		for (int i = 0; i < 4; i++) {
@@ -98,6 +99,39 @@ public class Layer {
 
 	public boolean equals(Layer that) {
 		return Arrays.equals(this.colours, that.colours);
+	}
+	
+	public int[] computeXandO(Layer that) {
+		
+		// x is correct colour and position
+		// o is correct colour only
+		
+		int x = 0;
+		
+		HashSet<Integer> perfectMatches = new HashSet<Integer>();
+		for (int i = 0; i < 4; i++) {
+			if (this.colours[i] == that.colours[i]) {
+				x++;
+				perfectMatches.add(i);
+			}
+		}
+		
+		int o = 0;
+		
+		for (int i = 0; i < 4; i++) {
+			if (!perfectMatches.contains(i)) {
+				for (int j = 0; j < 4; j++) {
+					if (!perfectMatches.contains(j)) {
+						if (this.colours[i] == that.colours[j]) {
+							o++;
+						}
+					}
+				}
+			}
+		}
+		
+		
+		return new int[] {x, o};
 	}
 	
 	@Override
@@ -117,6 +151,12 @@ public class Layer {
 			}
 		}
 		return true;
+	}
+	
+	public void reset() {
+		for (int i = 0; i < 4; i++) {
+			this.setColour(i, Colour.UNKNOWN);
+		}
 	}
 	
 }

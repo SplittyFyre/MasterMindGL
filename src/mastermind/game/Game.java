@@ -6,6 +6,7 @@ import java.util.prefs.BackingStoreException;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 
+import engine.fontMeshCreator.FontType;
 import engine.fontMeshCreator.GUIText;
 import engine.renderEngine.Loader;
 import engine.renderEngine.TRDisplayManager;
@@ -21,7 +22,7 @@ import engine.utils.TRRayCaster;
 import engine.utils.TRUtils;
 
 public class Game {
-	
+		
 	private Layer[] layers;
 	private TRScene scene;
 	private Layer correctLayer;
@@ -108,15 +109,21 @@ public class Game {
 	
 	
 	private void verifyLayer() {
-		if (this.correctLayer.equals(this.layers[activeLayer])) {
-			// win
+		Layer currentLayer = this.layers[activeLayer];
+		
+		if (this.correctLayer.equals(currentLayer)) {
+			this.win();
 		}
 		else {
 			
-			// process more
+			int[] vals = currentLayer.computeXandO(correctLayer);
+			int x = vals[0];
+			int o = vals[1];
+			
+			System.out.println("x: " + x + "    o: " + o);
 			
 			if (this.activeLayer == 9) { // this was their final chance
-				// lose
+				this.lose();
 			}
 			else {
 				activeLayer++;
@@ -129,6 +136,14 @@ public class Game {
 	}
 	private void lose() {
 		this.lost = true;
+	}
+	
+	private void reset() {
+		this.won = false;
+		this.lost = false;
+		for (Layer layer : this.layers) {
+			layer.reset();
+		}
 	}
 	
 	
@@ -445,13 +460,13 @@ public class Game {
 			
 			@Override
 			public void onClick(IButton button) {
-				
+				verifyLayer();
 				
 			}
 		};
 		
-		message = new GUIText("u shouldnt see this", 1.7f, TRUtils.trFont, TRMath.coordtext(0.7f, -0.05f - 0.8f), 0.5f, false);		
-		message.setColour(1, 1, 1);
+		message = new GUIText("this shouldnt be here", 2f, TRUtils.trFont, TRMath.coordtext(0.525f, -0.525f), 0.5f, false);		
+		message.hide();
 	}
 	
 	private void updateGUIS() {
@@ -460,16 +475,21 @@ public class Game {
 		if (this.won) {
 			panel.hide(guis);
 			background.show(guis);
-			
+			message.setColour(0, 0.9f, 0.5f);
+			message.setText("YOU WIN!!!");
+			message.show();
 		}
 		else if (this.lost) {
-			
+			panel.hide(guis);
+			background.show(guis);
+			message.setColour(1, 0.1f, 0.1f);
+			message.setText("YOU LOST :(");
+			message.show();
 		}
 		else {
 			if (this.selected != null) {
 				panel.show(guis);
 				panel.update();
-				message.show();
 
 				// if the active layer isnt complete, hide submit button
 				if (!layers[activeLayer].isComplete()) {

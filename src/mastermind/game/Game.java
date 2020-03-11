@@ -50,20 +50,20 @@ public class Game {
 	private List<GUITexture> guis;
 	
 	private TROrganizationNode entityNode;
+	private TROrganizationNode hiddenNode;
 	
 	public Game(TRScene scene, Matrix4f pmat, List<GUITexture> guis) {
 		this.scene = scene;
 		layers = new Layer[10];
 		
 		entityNode = new TROrganizationNode();
+		hiddenNode = new TROrganizationNode();
 		
 		for (int i = 0; i < 10; i++) {
 			layers[i] = new Layer(i, entityNode);
 		}
-		this.correctLayer = Layer.getRandom();
-		
-		System.out.println(correctLayer.toString());
-		
+		this.correctLayer = Layer.getRandomAKACorrect(hiddenNode);
+				
 		rc = new TRRayCaster(scene.getCamera(), pmat);
 		this.guis = guis;
 		initGUIS();
@@ -213,9 +213,11 @@ public class Game {
 	
 	private void win() {
 		this.won = true;
+		this.scene.addEntityToRoot(this.hiddenNode);
 	}
 	private void lose() {
 		this.lost = true;
+		this.scene.addEntityToRoot(this.hiddenNode);
 	}
 	
 	private void reset() {
@@ -233,7 +235,11 @@ public class Game {
 		for (int i = 0; i < 10; i++) {
 			layers[i] = new Layer(i, this.entityNode);
 		}
-		this.correctLayer = Layer.getRandom();
+		
+		this.scene.rootNode.detachChild(this.hiddenNode);
+		this.hiddenNode = new TROrganizationNode();
+		
+		this.correctLayer = Layer.getRandomAKACorrect(hiddenNode);
 	}
 	
 	

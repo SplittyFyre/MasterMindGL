@@ -81,14 +81,10 @@ public class Layer {
 			}
 			
 		}
-		// if player clicked without the cursor pointing at a shape
-		/*if (TRMouse.isMouseButtonDown(TRMouse.LEFT) &! flag) {
-			game.changeSelect(null, -1);
-		}*/
 	}
 	
 	
-	public static Layer getRandom() {
+	public static Layer getRandomAKACorrect(TROrganizationNode entityNode) {
 		Layer retval = new Layer();
 		
 		List<Colour> possibles = new LinkedList<Colour>(Arrays.asList(Colour.values()));
@@ -98,6 +94,19 @@ public class Layer {
 		for (int i = 0; i < 4; i++) {
 			retval.colours[i] = possibles.get(i);
 		}
+		
+		retval.shapes = new StaticEntity[4];
+		for (int i = 0; i < 4; i++) {
+			ModelTexture newtex = new SCTexture(possibles.get(i).col);
+			newtex.setReflectivity(0);
+			newtex.setShineDamper(10);
+			
+			retval.getShapes()[i] = new StaticEntity(new TexturedModel(rawBody, newtex), new Vector3f(i * shapeSpacing, 0, 150), 0, 0, 0, 10f);
+			if (entityNode != null)
+				entityNode.attachChild(retval.getShapes()[i]);
+		}
+		
+		System.out.println(retval.toString());
 		
 		return retval;
 	}

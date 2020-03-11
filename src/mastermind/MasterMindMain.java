@@ -59,8 +59,8 @@ public class MasterMindMain {
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
 		
-		float lightIntensity = 2.5f;
-		Light light = new Light(new Vector3f(1000, 500, 1000), new Vector3f(lightIntensity, lightIntensity, lightIntensity));
+		float lightIntensity = 2f;
+		Light light = new Light(new Vector3f(1000, 200, 1000), new Vector3f(lightIntensity, lightIntensity, lightIntensity));
 		scene.addLight(light);
 		
 		Game game = new Game(scene, engine.getActiveProjection().getMatrix(), guis);

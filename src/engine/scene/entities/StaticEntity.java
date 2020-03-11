@@ -25,4 +25,8 @@ public class StaticEntity extends TREntity {
 		super.setPosition(this.initialPosition);
 	}
 	
+	public Vector3f getInitialPosition() {
+		return initialPosition;
+	}
+	
 }

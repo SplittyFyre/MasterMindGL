@@ -184,7 +184,7 @@ public class Game {
 			// x is red, o is white
 			
 			int j = 0;
-			Vector3f lastShapePos = currentLayer.getShapes()[3].getPosition();
+			Vector3f lastShapePos = ((StaticEntity) currentLayer.getShapes()[3]).getInitialPosition();
 			for (int i = 0; i < x; i++) {
 				ModelTexture newtex = new SCTexture(Colour.RED.col);
 				newtex.setReflectivity(0);
@@ -258,7 +258,7 @@ public class Game {
 	private GUITexture background;
 	private SFAbstractButton submit;
 	
-	private GUIText message;
+	private GUIText message, info;
 	
 	private void initGUIS() {
 		
@@ -560,6 +560,8 @@ public class Game {
 		
 		message = new GUIText("this shouldnt be here", 2f, TRUtils.trFont, TRMath.coordtext(0.525f, -0.525f), 0.5f, false);		
 		message.hide();
+		info = new GUIText("Press TAB to play again", 1.3f, TRUtils.trFont, TRMath.coordtext(0.525f, -0.625f), 0.5f, false);		
+		info.hide();
 	}
 	
 	private void updateGUIS() {
@@ -569,18 +571,23 @@ public class Game {
 			panel.hide(guis);
 			background.show(guis);
 			message.setColour(0, 0.9f, 0.3f);
+			info.setColour(0, 0.9f, 0.3f);
 			message.setText("YOU WIN!!!");
 			message.show();
+			info.show();
 		}
 		else if (this.lost) {
 			panel.hide(guis);
 			background.show(guis);
 			message.setColour(1, 0.1f, 0.1f);
+			info.setColour(1, 0.1f, 0.1f);
 			message.setText("YOU LOST :(");
 			message.show();
+			info.show();
 		}
 		else {
 			message.hide();
+			info.hide();
 			if (this.selected != null) {
 				panel.show(guis);
 				panel.update();

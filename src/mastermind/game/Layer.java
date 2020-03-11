@@ -16,28 +16,30 @@ import engine.renderEngine.textures.ModelTexture;
 import engine.renderEngine.textures.SCTexture;
 import engine.scene.TRScene;
 import engine.scene.entities.StaticEntity;
+import engine.scene.entities.TROrganizationNode;
 import engine.utils.TRMouse;
 import engine.utils.TRRayCaster;
 
 public class Layer {
 	
-	static RawModel rawBody = OBJParser.loadObjModelWProperTexSeams("cube");
+	public static RawModel rawBody = OBJParser.loadObjModelWProperTexSeams("sphere");
 	
-	private static final float layerSpacing = 50.0f;
-	private static final float shapeSpacing = 60.0f;
+	public static final float layerSpacing = 50.0f;
+	public static final float shapeSpacing = 60.0f;
 	
 	private Colour[] colours = {Colour.UNKNOWN, Colour.UNKNOWN, Colour.UNKNOWN, Colour.UNKNOWN};
 	private StaticEntity[] shapes;
 	
-	public Layer(int lidx, TRScene scene) {
+	public Layer(int lidx, TROrganizationNode entityNode) {
 		shapes = new StaticEntity[4];
 		for (int i = 0; i < 4; i++) {
 			ModelTexture newtex = new SCTexture(Colour.UNKNOWN.col);
-			newtex.setReflectivity(5);
-			newtex.setShineDamper(25);
+			newtex.setReflectivity(0);
+			newtex.setShineDamper(10);
 			
 			shapes[i] = new StaticEntity(new TexturedModel(rawBody, newtex), new Vector3f(i * shapeSpacing, lidx * layerSpacing, 0), 0, 0, 0, 10f);
-			scene.addEntityToRoot(shapes[i]);
+			if (entityNode != null)
+				entityNode.attachChild(shapes[i]);
 		}
 	}
 	
@@ -51,6 +53,10 @@ public class Layer {
 		}
 		colours[i] = col;
 		((SCTexture) shapes[i].getModel().getTexture()).setValue(col.col);
+	}
+	
+	public StaticEntity[] getShapes() {
+		return this.shapes;
 	}
 	
 	public void update() {

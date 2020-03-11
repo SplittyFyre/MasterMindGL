@@ -74,6 +74,13 @@ public abstract class TREntity {
 		child.setParent(null);
 	}
 	
+	public void detachAll() {
+		for (TREntity child : children) {
+			child.setParent(null);
+		}
+		children.clear();
+	}
+	
 	public void detachChildAt(int i) {
 		if (!this.canHaveChildren) {
 			throw new RuntimeException("this entity can not have children");

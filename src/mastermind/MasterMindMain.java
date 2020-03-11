@@ -24,6 +24,7 @@ import engine.utils.TRMath;
 import engine.utils.TRMouse;
 import mastermind.game.Game;
 import mastermind.game.Layer;
+import mastermind.game.MasterMindCamera;
 
 public class MasterMindMain {
 	
@@ -52,13 +53,13 @@ public class MasterMindMain {
 		
 		TRScene scene = new TRScene();
 		
-		TRCamera camera = new RogueCamera();
+		TRCamera camera = new MasterMindCamera();
 		scene.setCamera(camera);
 		
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
 		
-		float lightIntensity = 2f;
+		float lightIntensity = 2.5f;
 		Light light = new Light(new Vector3f(1000, 500, 1000), new Vector3f(lightIntensity, lightIntensity, lightIntensity));
 		scene.addLight(light);
 		

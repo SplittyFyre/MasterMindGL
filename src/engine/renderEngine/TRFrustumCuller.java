@@ -63,7 +63,7 @@ public class TRFrustumCuller {
 			return true;
 		}
 		
-		float ang = 70.f;
+		float ang = 90.f;
 		
 		// z * 2 * tan(a / 2)
 		float width = eyevec.z * 2.f * (float) Math.tan(Math.toRadians(ang / 2.f));

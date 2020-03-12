@@ -21,12 +21,17 @@ import engine.scene.TRScene;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.TREntity;
 import engine.scene.entities.TROrganizationNode;
+import engine.scene.particles.ParticleTexture;
+import engine.scene.particles.systems.SimpleParticleSystem;
 import engine.utils.TRKeyboard;
 import engine.utils.TRMath;
 import engine.utils.TRRayCaster;
 import engine.utils.TRUtils;
 
 public class Game {
+	
+	private static ParticleTexture ptex = new ParticleTexture(Loader.loadTexture("explosionpuff"), 6);
+	private static SimpleParticleSystem particleSys = new SimpleParticleSystem(ptex, 10000, 100, 0, 0.33f, 10);
 		
 	private Layer[] layers;
 	private TRScene scene;
@@ -161,6 +166,8 @@ public class Game {
 		}
 		((SCTexture) this.selected.getModel().getTexture()).setValue(col.col);
 		layers[activeLayer].setColour(selectIndex, col);
+		
+		particleSys.generateParticles(this.selected.getPosition());
 	}
 	
 	

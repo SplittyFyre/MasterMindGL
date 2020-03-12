@@ -20,6 +20,8 @@ import engine.scene.entities.Light;
 import engine.scene.entities.camera.RogueCamera;
 import engine.scene.entities.camera.TRCamera;
 import engine.scene.particles.ParticleWatcher;
+import engine.scene.skybox.SkyboxTexture;
+import engine.scene.skybox.TRSkybox;
 import engine.utils.TRMath;
 import engine.utils.TRMouse;
 import mastermind.game.Game;
@@ -55,6 +57,11 @@ public class MasterMindMain {
 		
 		TRCamera camera = new MasterMindCamera();
 		scene.setCamera(camera);
+		
+		TRSkybox skybox = new TRSkybox(500f);
+		skybox.setTexture1(new SkyboxTexture(TRSkybox.locateSkyboxTextures("high")));
+		scene.setSkybox(skybox);
+		skybox.rotation = 90;
 		
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		

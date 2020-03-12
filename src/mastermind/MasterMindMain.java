@@ -17,15 +17,11 @@ import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.render.GUIRenderer;
 import engine.scene.TRScene;
 import engine.scene.entities.Light;
-import engine.scene.entities.camera.RogueCamera;
 import engine.scene.entities.camera.TRCamera;
 import engine.scene.particles.ParticleWatcher;
 import engine.scene.skybox.SkyboxTexture;
 import engine.scene.skybox.TRSkybox;
-import engine.utils.TRMath;
-import engine.utils.TRMouse;
 import mastermind.game.Game;
-import mastermind.game.Layer;
 import mastermind.game.MasterMindCamera;
 
 public class MasterMindMain {
@@ -40,7 +36,7 @@ public class MasterMindMain {
 				TRRenderEngine.RENDER_TERRAIN_BIT |
 				TRRenderEngine.RENDER_SKYBOX_BIT | 
 				TRRenderEngine.RENDER_DUDVWATER_BIT,
-				new TRProjectionCtx(7.41f, 30000, TRCamera.STD_FOV));
+				new TRProjectionCtx(1, 10000, TRCamera.STD_FOV));
 		
 		PostProcessing.init();
 		TextMaster.init();
@@ -76,6 +72,7 @@ public class MasterMindMain {
 			
 			camera.update();
 
+			// BIG METHOD HERE!
 			game.update();
 			
 			ParticleWatcher.update();

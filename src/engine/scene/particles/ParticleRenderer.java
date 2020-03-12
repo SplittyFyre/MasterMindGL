@@ -16,7 +16,6 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.scene.entities.camera.TRCamera;
-import engine.utils.TRMath;
 
 public class ParticleRenderer {
 	

@@ -14,7 +14,6 @@ import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
 import engine.renderEngine.textures.SCTexture;
-import engine.scene.TRScene;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.TROrganizationNode;
 import engine.utils.TRMouse;
@@ -67,7 +66,6 @@ public class Layer {
 	}
 	
 	public void update(TRRayCaster rc, Game game) {
-		boolean flag = false;
 		for (int i = 0; i < 4; i++) {
 			StaticEntity el = this.shapes[i];
 			el.rotate(0, -30 * TRDisplayManager.getFrameDeltaTime(), 0);
@@ -76,7 +74,6 @@ public class Layer {
 				// if the cursor is hovering over this specific shape
 				if (rc.penetrates(el.getPosition(), el.getModel().getRawModel().getBoundingBox().sphereRadius * el.getScale().x)) {
 					game.changeSelect(el, i);
-					flag = true;
 				}
 			}
 			

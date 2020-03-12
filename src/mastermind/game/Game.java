@@ -273,6 +273,8 @@ public class Game {
 	
 	private GUIText message, info;
 	
+	
+	@SuppressWarnings("unused") // they are actually used, adding themselves as children to a GUIStruct
 	private void initGUIS() {
 		
 		panel = new GUIStruct(new Vector2f(0.8f, -0.8f));

@@ -21,7 +21,7 @@ import engine.utils.TRRayCaster;
 
 public class Layer {
 	
-	public static RawModel rawBody = OBJParser.loadObjModelWProperTexSeams("sphere");
+	public static RawModel rawBody = OBJParser.loadObjModel("icosphere");
 	
 	public static final float layerSpacing = 50.0f;
 	public static final float shapeSpacing = 60.0f;

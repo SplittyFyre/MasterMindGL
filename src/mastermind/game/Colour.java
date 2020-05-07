@@ -3,9 +3,9 @@ import org.lwjgl.util.vector.Vector4f;
 
 public enum Colour {
 	
-	RED 	(new Vector4f(1, 0, 0, 1)),
-	GREEN 	(new Vector4f(0, 1, 0, 1)),
-	BLUE 	(new Vector4f(0, 0, 1, 1)),
+	RED 	(new Vector4f(0.6f, 0, 0, 1)),
+	GREEN 	(new Vector4f(0, 0.6f, 0, 1)),
+	BLUE 	(new Vector4f(0, 0, 0.6f, 1)),
 	YELLOW	(new Vector4f(1, 1, 0, 1)),
 	BROWN	(new Vector4f(115 / 255f, 77 / 255f, 38 / 255f, 1)),
 	ORANGE	(new Vector4f(1, 0.5f, 0, 1)),
